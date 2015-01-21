@@ -1,0 +1,11 @@
+header {
+	margin-right: -15px;
+	margin-left: -15px;
+	background-color: crimson;
+	color: whitesmoke;
+}
+
+.header {
+	margin-right: 0;
+	margin-left: 0;
+}

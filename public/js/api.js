@@ -1,5 +1,5 @@
-if (typeof API == 'undefined') { API = {}; }
  
-API.myFunction = {
+API = {};
+(function(ns){
 
-};
+}(API));

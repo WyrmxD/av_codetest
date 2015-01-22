@@ -3,7 +3,7 @@ API = {};
 (function(ns){
 
 	// var base_url = window.location.origin;
-	var base_url = 'http://localhost:8000';
+	var base_url = 'http://localhost:8000';	// Testing
 
 
 	ns.get_annotations = function(onSuccess, onError) {

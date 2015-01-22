@@ -5,7 +5,7 @@ define(['api', 'jquery', 'underscore'], function(Api, $, _) {
         var myapi = API;
         var originalTimeout;
         var onSuccess;
-        var onError;
+        var onErr;
         
         beforeEach(function() {
             originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -13,12 +13,12 @@ define(['api', 'jquery', 'underscore'], function(Api, $, _) {
 
             //spyOn(myapi, 'get_annotations').and.callThrough();
             onSuccess = jasmine.createSpy('onSuccess');
-            onError = jasmine.createSpy('onError');
+            onErr = jasmine.createSpy('onError');
         });
 
         it("should be able to get annotations' list", function(done) {
 
-            myapi.get_annotations(onSuccess, onError);
+            myapi.get_annotations(onSuccess, onErr);
             //expect(myapi.get_annotations).toHaveBeenCalled(); 
 
             setTimeout(function() {
@@ -27,9 +27,9 @@ define(['api', 'jquery', 'underscore'], function(Api, $, _) {
         });
 
         afterEach(function(done) {
+            done();
             expect(onSuccess).toHaveBeenCalled();
-            expect(onError).toHaveBeenCalled();
-            //done();
+            expect(onErr).not.toHaveBeenCalled();
             jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
         });
     });

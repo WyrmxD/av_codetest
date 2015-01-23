@@ -14,6 +14,6 @@ class Annotation extends Eloquent {
 
 	public static function sanitize_amount($amount)
 	{
-		return filter_var($amount, FILTER_SANITIZE_NUMBER_FLOAT);
+		return filter_var($amount, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-class AnnotationRepository {
+class AnnotationRepository implements IAnnotationRepository {
 
 	public function getAll()
 	{

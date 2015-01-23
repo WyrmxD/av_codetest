@@ -79,3 +79,7 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+// IAnnotationRepository interface -> class
+App::bind('IAnnotationRepository', 'AnnotationRepository');
+

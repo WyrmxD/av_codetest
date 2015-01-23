@@ -2,7 +2,7 @@
 
 class AnnotationController extends BaseController {
 
-	public function __construct(AnnotationRepository $annotation)
+	public function __construct(IAnnotationRepository $annotation)
 	{
 		$this->annotation = $annotation;
 	}

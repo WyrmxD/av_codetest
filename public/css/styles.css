@@ -9,3 +9,7 @@ header {
 	margin-right: 0;
 	margin-left: 0;
 }
+
+.input_large {
+	width: 400px;
+}

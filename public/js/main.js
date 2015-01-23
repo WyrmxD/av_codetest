@@ -1,1 +1,61 @@
-API={},function(a){var b="http://localhost:8000";a.get_annotations=function(a,c){$.ajax({type:"get",url:b+"/annotation",success:a,error:c})}}(API);
+ 
+API = {};
+(function(ns){
+
+	// var base_url = window.location.origin;
+	var base_url = 'http://localhost:8000';	// Testing
+
+
+	ns.get_annotations = function(onSuccess, onError) {
+		$.ajax({
+			type: 'get',
+			url: base_url + '/annotation',
+			success: onSuccess,
+			error: onError
+		});
+	}
+
+}(API));;$(function(){
+
+	var Annotations = Backbone.Collection.extend({
+		url: '/list'
+	});
+
+	var  AnnotationList = Backbone.View.extend({
+		el: '#content',
+
+		render: function() {
+			var that = this;
+			var annotations = new Annotations();
+			API.get_annotations(onSuc, onErr);
+
+			function onSuc(annotations) {
+				var data = {annotations: annotations};
+				console.log(data);
+				var template = _.template($("#annotations_template").html());
+				var html = template(data);
+
+				that.$el.html(html);
+			}
+
+			function onErr(data) {
+				console.log('Error');
+			}
+		}
+	});
+	var annotationList = new AnnotationList();
+
+	var Router = Backbone.Router.extend({
+		routes: {
+			'': 'home'
+		}
+	});
+	var router = new Router();
+	router.on('route:home', function(){
+		//var home_view = new HomeView({ el: $("#content") });
+		annotationList.render();
+	});
+
+	Backbone.history.start();
+
+});

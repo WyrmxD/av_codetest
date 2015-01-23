@@ -45,7 +45,7 @@
 							<% _.each(annotations, function(annotation) {%>
 								<tr>
 									<td><%= annotation.get('description') %></td>
-									<td><%= annotation.get('amount') %></td>
+									<td><%= annotation.get('amount') %> €</td>
 									<td><a href="#/edit/<%= annotation.get('id')%>" class="btn btn-default">Edit</a></td>
 								</tr>
 							<% }); %>

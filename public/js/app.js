@@ -16,6 +16,8 @@ $(function(){
 		return o;
 	};
 
+	/* Collections & Models */
+
 	var Annotations = Backbone.Collection.extend({
 		url: '/annotation'
 	});
@@ -23,6 +25,9 @@ $(function(){
 	var Annotation = Backbone.Model.extend({
 		urlRoot: '/annotation'
 	});
+
+
+	/* Views */
 
 	var  AnnotationList = Backbone.View.extend({
 		el: '#content',
@@ -41,7 +46,6 @@ $(function(){
 			});
 		}
 	});
-
 
 	var EditAnnotation = Backbone.View.extend({
 		el: '#content',
@@ -102,6 +106,8 @@ $(function(){
 		}
 
 	});
+
+	/* Routes */
 
 	var Router = Backbone.Router.extend({
 		routes: {

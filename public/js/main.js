@@ -63,13 +63,25 @@ API = {};
 	var EditAnnotation = Backbone.View.extend({
 		el: '#content',
 
-		render: function() {
-			var template = _.template($("#edit_annotation_template").html());
-			this.$el.html(template);
+		render: function(options) {
+			var that = this;
+			if (options.id) {
+				that.annotation = new Annotation({id: options.id});
+				that.annotation.fetch({
+					success: function(annotation) {
+						var template = _.template($("#edit_annotation_template").html());
+						that.$el.html(template({annotation: annotation}));
+					}
+				})
+			} else {
+				var template = _.template($("#edit_annotation_template").html());
+				this.$el.html(template({annotation: null}));
+			}
 		},
 
 		events: {
-			'submit .edit_annotation_form': 'saveAnnotation'
+			'submit .edit_annotation_form': 'saveAnnotation',
+			'click .delete': 'deleteAnnotation'
 		},
 
 		saveAnnotation: function(ev) {
@@ -77,20 +89,31 @@ API = {};
 			var annotation = new Annotation();
 			annotation.save(annotationDetails, {
 				success: function(annotation) {
-					console.log('yei');
+					router.navigate('', {trigger: true});
 				},
 				error: function(data) {
 					console.log(data);	
 				}
 			})
 			return false;
+		},
+
+		deleteAnnotation: function(ev) {
+			this.annotation.destroy({
+				success: function() {
+					router.navigate('', {trigger: true});
+				}
+			});
+			return false;
 		}
+
 	});
 
 	var Router = Backbone.Router.extend({
 		routes: {
 			'': 'home',
-			'new': 'editAnnotation'
+			'new': 'editAnnotation',
+			'edit/:id': 'editAnnotation'
 		}
 	});
 	
@@ -103,8 +126,8 @@ API = {};
 		annotationList.render();
 	});
 
-	router.on('route:editAnnotation', function(){
-		editAnnotation.render();
+	router.on('route:editAnnotation', function(id){
+		editAnnotation.render({id: id});
 	});
 
 	Backbone.history.start();

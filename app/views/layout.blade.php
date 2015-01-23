@@ -41,6 +41,7 @@
 							<tr>
 								<th>Description</th>
 								<th>Amount</th>
+								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,6 +49,7 @@
 								<tr>
 									<td><%= annotation.get('description') %></td>
 									<td><%= annotation.get('amount') %></td>
+									<td><a href="#/edit/<%= annotation.get('id')%>" class="btn btn-default">Edit</a></td>
 								</tr>
 							<% }); %>
 						</tboy>
@@ -60,10 +62,14 @@
 			<div class="row">
 				<div class="col-xs-12 col-md-8 col-md-offset-2">
 					<form class="edit_annotation_form">
-						<legend>Create new annotation</legend>
-						<input name="description" class="input_large" type="text" placeholder="Description">
-						<input name="amount" type="text" placeholder="0.0">
-						<button type="submit" class="btn btn-default">Add</button>
+						<legend><%= annotation ? 'Edit ' : 'Create new ' %>annotation</legend>
+						<input name="description" class="input_large" type="text" placeholder="Description" value="<%= annotation ? annotation.get('description') : '' %>">
+						<input name="amount" type="text" placeholder="0.0" value="<%= annotation ? annotation.get('amount') : '' %>">
+						<button type="submit" class="btn btn-default"><%= annotation ? 'Update' : 'Add' %></button>
+						<% if (annotation) { %>
+							<input name="id" type="hidden" value="<%= annotation.get('id') %>">
+							<button type="submit" class="btn btn-warning delete">Delete</button>
+						<% } %>
 					</form>
 				</div>
 			</div>

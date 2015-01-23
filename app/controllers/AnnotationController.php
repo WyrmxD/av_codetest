@@ -1,6 +1,6 @@
 <?php
 
-class AnnotationController extends \BaseController {
+class AnnotationController extends BaseController {
 
 	/**
 	 * GET
@@ -97,6 +97,9 @@ class AnnotationController extends \BaseController {
 			return $response;
 		}
 		$annotation->delete();
+
+		$response = Response::make(200);
+		return $response;
 	}
 
 

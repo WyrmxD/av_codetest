@@ -2,6 +2,11 @@
 
 class AnnotationController extends BaseController {
 
+	public function __construct(AnnotationRepository $annotation)
+	{
+		$this->annotation = $annotation;
+	}
+
 	/**
 	 * GET
 	 * Display a listing of the resource.
@@ -10,7 +15,7 @@ class AnnotationController extends BaseController {
 	 */
 	public function index()
 	{
-		$annotations = Annotation::all();
+		$annotations = $this->annotation->getAll();
 		return Response::json($annotations);
 	}
 
@@ -33,14 +38,11 @@ class AnnotationController extends BaseController {
 
 		//TODO validate & sanitize
 
-		$annotation = new Annotation;
-		$annotation->description = $description;
-		$annotation->amount = $amount;
-		$annotation->save();
+		$data = array( 'description' => $description, 'amount' => $amount);
+		$annotation = $this->annotation->createOrUpdate(null, $data);
 
 		$response = Response::make($annotation, 200);
 		$response->header('Content-Type', 'application/json');
-
 		return $response;
 	}
 
@@ -54,7 +56,7 @@ class AnnotationController extends BaseController {
 	 */
 	public function show($id)
 	{
-		$annotation = Annotation::find($id);
+		$annotation = $this->annotation->getById($id);
 		return Response::json($annotation);
 	}
 
@@ -75,10 +77,15 @@ class AnnotationController extends BaseController {
 		
 		//TODO validate & sanitize
 
-		$annotation = Annotation::find($id);
-		$annotation->description = Input::get('description');
-		$annotation->amount = Input::get('amount');
-		$annotation->save();
+		$data = array( 
+			'description' => Input::get('description'), 
+			'amount' => Input::get('amount')
+		);
+		$annotation = $this->annotation->createOrUpdate($id, $data);
+
+		$response = Response::make($annotation, 200);
+		$response->header('Content-Type', 'application/json');
+		return $response;
 	}
 
 
@@ -91,15 +98,14 @@ class AnnotationController extends BaseController {
 	 */
 	public function destroy($id)
 	{
-		$annotation = Annotation::find($id);
-		if (!isset($annotation)) {
-			$response = Response::make('Record is missing', 500);
+		$success = $this->annotation->delete($id);
+		if ($success) {
+			$response = Response::make(200);
 			return $response;
 		}
-		$annotation->delete();
-
-		$response = Response::make(200);
+		$response = Response::make('Record is missing', 500);
 		return $response;
+
 	}
 
 

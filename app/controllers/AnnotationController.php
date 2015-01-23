@@ -26,7 +26,7 @@ class AnnotationController extends BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store($id = null)
 	{
 		if (!Input::has('description') || !Input::has('amount')) {
 			$response = Response::make('Wrong parameters', 400);
@@ -36,11 +36,23 @@ class AnnotationController extends BaseController {
 		$description = Input::get('description');
 		$amount = Input::get('amount');
 
-		//TODO validate & sanitize
+		// validate & sanitize
+		if (!Annotation::validate($description, $amount)) {
+			$response = Response::make('Wrong parameters', 400);
+			return $response;
+		}
+		
+		$data = array( 
+			'description' => Annotation::sanitize_description($description),
+			'amount' => Annotation::sanitize_amount($amount)
+		);
 
-		$data = array( 'description' => $description, 'amount' => $amount);
-		$annotation = $this->annotation->createOrUpdate(null, $data);
-
+		if (is_null($id)) {
+			$annotation = $this->annotation->createOrUpdate(null, $data);
+		} else {
+			$annotation = $this->annotation->createOrUpdate($id, $data);	
+		}
+		
 		$response = Response::make($annotation, 200);
 		$response->header('Content-Type', 'application/json');
 		return $response;
@@ -59,35 +71,7 @@ class AnnotationController extends BaseController {
 		$annotation = $this->annotation->getById($id);
 		return Response::json($annotation);
 	}
-
-
-	/**
-	 * PUT/PATCH
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		if (!Input::has('description') || !Input::has('amount')){
-			$response = Response::make('Wrong parameters', 400);
-			return $response;			
-		}
-		
-		//TODO validate & sanitize
-
-		$data = array( 
-			'description' => Input::get('description'), 
-			'amount' => Input::get('amount')
-		);
-		$annotation = $this->annotation->createOrUpdate($id, $data);
-
-		$response = Response::make($annotation, 200);
-		$response->header('Content-Type', 'application/json');
-		return $response;
-	}
-
+	
 
 	/**
 	 * DELETE

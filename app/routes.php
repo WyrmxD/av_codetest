@@ -13,4 +13,5 @@
 
 Route::get('/', 'HomeController@showWelcome');
 
-Route::resource('annotation', 'AnnotationController');
+Route::resource('annotation', 'AnnotationController', array('only' => array('index', 'show', 'destroy')));
+Route::match(array('POST', 'PUT', 'PATCH'), '/annotation/{id?}', 'AnnotationController@store');

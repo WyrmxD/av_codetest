@@ -16,18 +16,6 @@ class AnnotationController extends \BaseController {
 
 
 	/**
-	 * GET
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	// public function create()
-	// {
-	// 	//
-	// }
-
-
-	/**
 	 * POST
 	 * Store a newly created resource in storage.
 	 *
@@ -49,6 +37,11 @@ class AnnotationController extends \BaseController {
 		$annotation->description = $description;
 		$annotation->amount = $amount;
 		$annotation->save();
+
+		$response = Response::make($annotation, 200);
+		$response->header('Content-Type', 'application/json');
+
+		return $response;
 	}
 
 
@@ -64,19 +57,6 @@ class AnnotationController extends \BaseController {
 		$annotation = Annotation::find($id);
 		return Response::json($annotation);
 	}
-
-
-	/**
-	 * GET
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	// public function edit($id)
-	// {
-	// 	//
-	// }
 
 
 	/**

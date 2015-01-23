@@ -27,32 +27,44 @@
 		<script type="text/template" id="item_template"></script>
 
 		<script type="text/template" id="annotations_template">
-			<table class="table striped">
-				<thead>
-					<tr>
-						<th>Description</th>
-						<th>Amount</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% _.each(annotations, function(annotation) {%>
-						<tr>
-							<td><%= annotation.description %></td>
-							<td><%= annotation.amount %></td>
-						</tr>
-					<% }); %>
-				</tboy>
-			</table>
-		</script>
-
-		<script type="text/template" id="new_annotation_template">
+			<nav>
+				<div class="row">
+					<div class="col-xs-12 col-md-8 col-md-offset-2">
+						<a href="#/new" class="btn btn-primary" >New Annotation</a>
+					</div>
+				</div>
+			</nav>
 			<div class="row">
 				<div class="col-xs-12 col-md-8 col-md-offset-2">
-					<h2>New invoice</h2>
+					<table class="table striped">
+						<thead>
+							<tr>
+								<th>Description</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% _.each(annotations, function(annotation) {%>
+								<tr>
+									<td><%= annotation.get('description') %></td>
+									<td><%= annotation.get('amount') %></td>
+								</tr>
+							<% }); %>
+						</tboy>
+					</table>
+				</div>
+			</div>
+		</script>
 
-					<input id="ann_description" class="input_large" type="text" placeholder="Description">
-					<input id="ann_amount" type="text" placeholder="0.0">
-					<button id="add_annotation" type="submit" class="btn btn-default">Add</button>
+		<script type="text/template" id="edit_annotation_template">
+			<div class="row">
+				<div class="col-xs-12 col-md-8 col-md-offset-2">
+					<form class="edit_annotation_form">
+						<legend>Create new annotation</legend>
+						<input name="description" class="input_large" type="text" placeholder="Description">
+						<input name="amount" type="text" placeholder="0.0">
+						<button type="submit" class="btn btn-default">Add</button>
+					</form>
 				</div>
 			</div>
 		</script>

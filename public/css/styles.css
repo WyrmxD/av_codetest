@@ -10,6 +10,11 @@ header {
 	margin-left: 0;
 }
 
+nav {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
 .input_large {
 	width: 400px;
 }

@@ -71,6 +71,7 @@ $(function(){
 		},
 
 		saveAnnotation: function(ev) {
+			var that = this;
 			var annotationDetails = $(ev.currentTarget).serializeObject();
 			var annotation = new Annotation();
 			annotation.save(annotationDetails, {
@@ -78,14 +79,17 @@ $(function(){
 					router.navigate('', {trigger: true});
 				},
 				error: function(data) {
-					console.log('Error creating or editing');
-					var message_container = $('#message_container');
-					var msg = "Wrong parameters: 'description' should be a string and 'amount' a float number, ie: 100.1 "
-					$('.message').html(msg);
-					message_container.show();
+					var msg = "Wrong parameters: 'description' should be a string and 'amount' a float number, ie: 100.1 ";
+					that.showError(msg);
 				}
 			})
 			return false;
+		},
+
+		showError: function(msg) {
+			var message_container = $('#message_container');
+			$('.message').html(msg);
+			message_container.fadeIn(1000).delay(8000).fadeOut(1000);
 		},
 
 		deleteAnnotation: function(ev) {

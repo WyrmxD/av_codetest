@@ -18,3 +18,13 @@ nav {
 .input_large {
 	width: 400px;
 }
+
+#message_container {
+	display: none;
+}
+
+.message {
+	border: 1px solid whitesmoke;
+	margin-top: 10px 10px 0 10px;
+	padding: 5px;
+}

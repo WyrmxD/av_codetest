@@ -54,6 +54,9 @@ $(function(){
 					success: function(annotation) {
 						var template = _.template($("#edit_annotation_template").html());
 						that.$el.html(template({annotation: annotation}));
+					},
+					error: function() {
+						console.log('Error fetching annotations');
 					}
 				})
 			} else {
@@ -75,7 +78,11 @@ $(function(){
 					router.navigate('', {trigger: true});
 				},
 				error: function(data) {
-					console.log(data);	
+					console.log('Error creating or editing');
+					var message_container = $('#message_container');
+					var msg = "Wrong parameters: 'description' should be a string and 'amount' a float number, ie: 100.1 "
+					$('.message').html(msg);
+					message_container.show();
 				}
 			})
 			return false;

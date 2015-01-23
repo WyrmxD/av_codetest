@@ -18,14 +18,11 @@
 			</header>	
         	
         	<div id="content">
-        		
         	</div>
 
         </div>
 
 		<!-- Templates -->
-		<script type="text/template" id="item_template"></script>
-
 		<script type="text/template" id="annotations_template">
 			<nav>
 				<div class="row">
@@ -71,6 +68,11 @@
 							<button type="submit" class="btn btn-warning delete">Delete</button>
 						<% } %>
 					</form>
+				</div>
+			</div>
+			<div id="message_container" class="row">
+				<div class="col-xs-12 col-md-8 col-md-offset-2 message">
+					<p>Error:</p>
 				</div>
 			</div>
 		</script>
